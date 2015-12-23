@@ -1,0 +1,79 @@
+﻿<Page
+    x:Class="SQLiteModernApp.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SQLiteModernApp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="using:SQLiteModernApp.Converters"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <converters:DepartmentListToStringConverter x:Key="DepartmentListToStringConverter"/>
+    </Page.Resources>
+    
+    <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Title Panel -->
+        <StackPanel Grid.Row="0" Margin="19,19,0,0">
+            <TextBlock Text="Employee List" Margin="0,0,0,26.5" Style="{ThemeResource HeaderTextBlockStyle}"/>
+        </StackPanel>
+        
+        <ListView Grid.Row="1" Name="lstViewEmployees" Margin="6,0" ItemsSource="{Binding}" SelectionChanged="lstViewEmployees_SelectionChanged">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />                    
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="4">
+                        <Grid.Resources>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="FontSize" Value="18"></Setter>
+                            </Style>
+                        </Grid.Resources>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="Employee Id" FontWeight="Bold" Margin="0,0,4,0"></TextBlock>
+                        <TextBlock Grid.Column="1" Text="{Binding EmployeeId}" FontWeight="SemiLight"></TextBlock>
+
+                        <TextBlock Grid.Row="1" Text="First Name" FontWeight="Bold" Margin="0,0,4,0"></TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding FirstName}" FontWeight="SemiLight"></TextBlock>
+
+                        <TextBlock Grid.Row="2" Text="Last Name" FontWeight="Bold" Margin="0,0,4,0"></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding LastName}" FontWeight="SemiLight"></TextBlock>
+
+                        <TextBlock Grid.Row="3" Text="Email" FontWeight="Bold" Margin="0,0,4,0"></TextBlock>
+                        <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Email}" FontWeight="SemiLight"></TextBlock>
+
+                        <TextBlock Grid.Row="4" Text="Departments" FontWeight="Bold" Margin="0,0,4,0"></TextBlock>
+                        <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Departments, Converter={StaticResource DepartmentListToStringConverter}}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton x:Name="AppBarButton_Add" Icon="Add" Label="add" Click="AddButton_Click"/>
+            <AppBarButton x:Name="AppBarButton_Edit" Icon="Edit" Label="edit" Click="EditButton_Click"/>
+            <AppBarButton x:Name="AppBarButton_Delete" Icon="Delete" Label="delete" Click="DeleteButton_Click"/>
+        </CommandBar>
+    </Page.BottomAppBar>
+</Page>
